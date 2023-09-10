@@ -1,0 +1,80 @@
+@charset "UTF-8"
+@import '@/styles/colors'
+
+
+:root 
+  --acco-light: $color__black--transparency-darker
+  --acco-lightest: $color__green
+  --acco-dark: #9E9E9E
+  --acco-darkest: $color__background--dark
+  --acco-active: $color__sand
+
+
+.accordion-list 
+  width: 100%
+  background: var(--acco-lightest)
+
+.accordion-list .accordion-item 
+  margin-top: -1px
+  --content-height: 0px
+  height: calc(var(--summary-height) + 26px)
+  overflow: hidden
+  transition: height 300ms ease-in-out
+  border-top: 1px solid $color__sand
+  border-bottom: 1px solid $color__sand
+
+.accordion-list .accordion-item > .accordion-item__summary 
+  padding: 12px
+  cursor: pointer
+  color: var(--acco-darkest)
+  display: flex
+  justify-content: space-between
+  align-items: center
+  font-weight: 700
+  font-size: 20px
+  line-height: 24px
+  transition: color 300ms ease-in-out
+
+.accordion-list .accordion-item > .accordion-item__summary:hover
+  background: $color__black--transparency
+
+.accordion-list .accordion-item > .accordion-item__summary > .accordion-item__summary-icon 
+  transition: transform 300ms ease-in-out
+
+.accordion-list .accordion-item > .accordion-item__summary > .accordion-item__summary-icon--default::before 
+  content: "▲"
+  line-height: 22px
+
+.accordion-list .accordion-item--open 
+  height: calc(var(--summary-height) + var(--content-height) + 51px)
+  background: var(--acco-lightest)
+
+.accordion-list .accordion-item--open > .accordion-item__summary > .accordion-item__summary-icon 
+  transform: rotate(180deg)
+
+.accordion-list .accordion-item--open > .accordion-item__summary 
+  background: $color__black--transparency
+  color: var(--acco-active)
+
+.accordion-list .accordion-item--open > .accordion-item__summary .accordion-item__summary-title
+  letter-spacing: 2px
+  font-weight: bold
+
+.accordion-list .accordion-item--disabled > .accordion-item__summary 
+  color: var(--acco-dark)
+  cursor: default
+
+.accordion-list .accordion-item--disabled > .accordion-item__summary:hover 
+  color: var(--acco-dark)
+
+.accordion-list .accordion-item > .accordion-item__content 
+  background: $color__black--transparency-clear
+  border-top: none
+  padding: 12px
+
+.accordion-item__summary-title
+  color: $color__gray--clear
+  text-transform: uppercase
+
+.accordion-item__summary-icon
+  color: $color__gray--clear

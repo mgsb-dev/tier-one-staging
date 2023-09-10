@@ -1,0 +1,73 @@
+@import '@/styles/colors'
+@import '@/styles/base'
+@import '@/styles/breakpoints'
+
+.NavBar
+  display: none
+  @media only screen and (min-width: $desktop)
+    position: fixed
+    height: 6vh
+    width: 100%
+    padding: 1rem
+    padding-bottom: 0.5rem
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    z-index: 2
+    background-color: $color__black--transparency-darker
+    -webkit-box-shadow: 0px 5px 2px 0px $color__black--transparency
+    -moz-box-shadow: 0px 5px 2px 0px $color__black--transparency
+    box-shadow:  0px 5px 2px 0px $color__black--transparency
+  &__logo
+    height: 100%
+    &__link
+      display: inline-block
+      height: 100%
+      &__image
+        height: 100%
+  &__content
+    width: 70%
+    height: 100%
+    display: flex
+    flex-direction: row
+    justify-content: flex-end
+    align-items: center
+    gap: 2.5rem
+  &__list
+    z-index: 2
+    position: absolute
+    top: 35px
+    background-color: $color__gray--dark
+    border-top: 2px solid transparent
+    padding: 6px 10px
+  &__list-title
+    font-size: 1rem
+    text-align: right
+    letter-spacing: 1px
+    border-bottom: 2px solid transparent
+    a
+      font-weight: bold
+      padding-left: 2px
+      font-family: $font__title
+      text-transform: uppercase
+    &:hover, &.active
+      border-bottom: 2px solid $color__sand
+  &__list-title--dark
+    cursor: url('@/assets/target_white.png'), pointer
+  &__list-item
+    font-size: 1rem
+    padding: 0.5rem
+    &:hover
+      a
+        color: $color__sand
+  &__rrss
+    &__container
+      display: flex
+      flex-direction: row
+    &__item
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
+      margin-right: 0.5rem

@@ -1,0 +1,86 @@
+@import '@/styles/breakpoints'
+@import '@/styles/colors'
+@import '@/styles/base'
+
+.Home
+  &__wrapper
+    position: relative
+    height: 100vh
+    width: 100vw
+    overflow: hidden
+  &__section
+    position: absolute
+    width: 100%
+    height: 100%
+    overflow: hidden
+    display: flex
+    justify-content: center
+    align-items: center
+  &__title
+    position: relative
+    font-size: 15vw
+    text-transform: uppercase
+    color: $color__white
+    text-shadow: -2px -2px 0 $color__sand, 4px 4px 0 $color__green, 4px 4px 20px $color__green, -2px -2px 20px $color__sand, 0px 0px 20px $color__white
+    &__glitch
+      position: absolute
+      top: 0
+      left: 0
+      font-size: 15vw
+      color: $color__white
+      font-family: $font__h1
+      &:first-child 
+        clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%)
+        z-index: -1
+        animation: glitch steps(1) 2.3s infinite
+      &:last-child 
+        clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%)
+        animation: glitch steps(1) 1.5s infinite
+        
+  
+video
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  object-fit: cover
+  filter: saturate(0)
+    
+
+@keyframes glitch
+  0%
+    transform: translate(0px)
+
+  55%
+    transform: translate(0px) skew(20deg)
+
+  60%
+    transform: translateX(8px)
+    color: transparent
+
+  65%
+    transform: translate(0px, 8px)
+    color: inherit
+
+  90%
+    transform: translate(8px, 8px) skew(-10deg)
+    color: #23232b
+
+  100%
+    transform: translate(8px, 8px)
+    color: inherit
+
+
+
+@media (prefers-reduced-motion: reduce)
+  *,
+  ::before,
+  ::after 
+    animation-delay: -1ms !important
+    animation-duration: 1ms !important
+    animation-iteration-count: 1 !important
+    background-attachment: initial !important
+    scroll-behavior: auto !important
+    transition-duration: 0s !important
+    transition-delay: 0s !important

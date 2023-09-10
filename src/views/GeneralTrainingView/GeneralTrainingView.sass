@@ -1,0 +1,158 @@
+@import '@/styles/colors'
+@import '@/styles/breakpoints'
+@import '@/styles/base'
+
+
+.GeneralTraining
+  padding: 2vw
+  padding-bottom: 15vw
+  height: 100vh
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  @media only screen and (min-width: $tablet)
+    padding: 5vw
+  &__card
+    &__list
+      padding: 5vw 0
+      width: 100%
+      height: 100%
+      display: flex
+      flex-direction: column
+      justify-content: space-around
+      align-items: center
+      @media only screen and (min-width: $tablet)
+        flex-direction: row
+        justify-content: center
+        gap: 10vw
+    &__wrapper
+      position: relative
+      height: 35vh
+      aspect-ratio: 1
+      perspective: 1000px
+      @media only screen and (min-width: $tablet)
+        height: 40vh
+    &__blurbContainer
+      position: absolute
+      top: -18px
+      display: flex
+      color: $color__hud
+      justify-content: flex-end
+      font-size: 0.5rem
+      min-width: 200px
+      right: -25px
+      gap: 7px
+      width: 500px
+    &__blurbContainer :last-child
+      width: 20px
+      overflow-wrap: break-word
+      font-size: 0.5rem
+    &__blurbContainer :first-child
+      white-space: nowrap
+    &__title
+      font-size: 0.9rem
+      font-family: $font__title
+      letter-spacing: 1px
+    &__content
+      transform: rotateX(-5deg) rotateY(10deg)
+  &__modal
+    background: $color__hud
+    height: 35vh
+    aspect-ratio: 1
+    position: relative
+    display: flex
+    justify-content: center
+    align-items: center
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 6% 100%, 0 93%, 0 68%, 0 65%, 5% 60%, 5% 31%, 0 24%)
+    @media only screen and (min-width: $tablet)
+      height: 40vh
+  &__textInner
+    position: absolute
+    top: 0.5rem
+    left: 0.8rem
+    color: $color__hud
+    z-index: 20
+    text-transform: uppercase
+    font-weight: 700
+    font-size: 1.3rem
+    font-family: $font__title
+    letter-spacing: 2px
+  &__textOuter
+    color: $color__hud
+    float: right
+    margin-bottom: 5px
+    text-transform: uppercase
+    font-family: $font__title
+    font-weight: bold
+    font-size: 1rem
+    white-space: nowrap
+    letter-spacing: 1px
+  &__extra
+    height: 5px
+    width: 40px
+    background: $color__hud
+    position: absolute
+    right: 0
+    margin-top: -1px
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 37% 100%)
+  &__modal:after
+    width: 97%
+    height: 8px
+    background: $color__hud
+    position: absolute
+    bottom: 0
+    right: 0
+    content: ""
+  &__inner
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 6% 100%, 0 93%, 0 68%, 0 65%, 5% 60%, 5% 31%, 0 24%)
+    height: 99%
+    width: 98%
+    background: $color__background--dark
+    background: url("@/assets/training.jpg") center/ contain
+  &__screenGlare 
+    position: absolute
+    height: 99%
+    width: 98%
+    opacity: 0.4
+    z-index: 1000
+    background: radial-gradient(944.09px at 50% 0%, #102710 0%, rgba(13, 17, 13, 0.23) 100%)
+    &:after
+      content: ''
+      width: 100%
+      height: 100%
+      position: absolute
+      top: 0
+      left: 0
+      background: -webkit-linear-gradient($color__hud 50%, $color__background__dark 50%)
+      background-size: 100% 4px
+      background-repeat: repeat-y
+      opacity: .14
+      box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, .8)
+      border-radius: 20px
+      z-index: 1
+      pointer-events: none
+      animation: scrollDown 3s linear infinite
+      -webkit-animation: scrollDown 3s linear infinite
+
+
+@keyframes scrollDown
+  0%
+    background-position: 0px 0px
+  50%
+    background-position: 0px 10px
+  99.9%
+    background-position: 0px 20px
+  100%
+    background-position: 0px 0px
+
+
+@-webkit-keyframes scrollDown
+  0%
+    background-position: 0px 0px
+  50%
+    background-position: 0px 10px
+  99.9%
+    background-position: 0px 20px
+  100%
+    background-position: 0px 0px

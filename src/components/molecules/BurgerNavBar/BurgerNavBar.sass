@@ -1,0 +1,152 @@
+@import '@/styles/colors'
+@import '@/styles/base'
+@import '@/styles/breakpoints'
+
+.BurgerNavBar
+  width: 100%
+  height: 12vh
+  position: absolute
+  bottom: 0.5vh
+  left: auto
+  @media only screen and (min-width: $tablet)
+    bottom: 5vh
+  &__label
+    cursor: pointer
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    width: 33%
+    height: 66px
+    position: relative
+    z-index: 2
+  &__content
+    width: 95%
+    height: 12vh
+    margin: auto
+    display: flex
+    align-items: flex-end
+    position: relative
+    justify-content: center
+    @media only screen and (min-width: $tablet)
+      width: 75%
+    &::before 
+      content: ''
+      position: absolute
+      width: 84%
+      height: 0
+      bottom: -10px
+      left: 0
+      right: 0
+      margin: auto
+    &::after
+      content: ''
+    &__circle
+      width: 55px
+      height: 55px
+      background: $color__background--dark
+      position: absolute
+      top: 0.5vh
+      z-index: 1
+      border-radius: 50%
+      left: 0
+      right: 0
+      margin: auto
+      transition: 200ms cubic-bezier(0.14, -0.08, 0.74, 1.4)
+      box-shadow: 0px 82px 20px 0px rgba(128, 128, 128, 0.29)
+    &__selected
+      position: absolute
+      filter: contrast(15)
+      width: 100%
+      background: $color__white
+      border-radius: 35px
+      overflow: hidden
+      border-style: inset
+      &--bottom
+        width: 100%
+        height: 7vh
+        background-color: $color__background--dark
+        display: flex
+        justify-content: center
+        filter: blur(15px)
+      &--indicator
+        width: 60px
+        height: 65px
+        background-color: $color__background--dark
+        border: solid 2px $color__sand
+        background: $color__white
+        background-size: cover
+        background-position: 0 10px
+        border-radius: 50%
+        position: absolute
+        left: 0
+        top: -38px
+        right: 0
+        margin: auto
+        transition: 200ms cubic-bezier(0.14, -0.08, 0.74, 1.4)
+
+  // Direct selectors
+  input
+    display: none
+  label > img.icon
+    width: 2rem
+    height: 2rem
+    top: 0
+    bottom: 0
+    margin: auto
+    position: absolute
+    z-index: 3
+    transition: 200ms 100ms cubic-bezier(0.14, -0.08, 0.74, 1.4)
+  label::before
+    content: ''
+    position: absolute
+
+  #home:checked ~ [for="home"] > img.icon 
+    top: -9vh
+    height: 45px
+    width: 45px
+
+  #home:checked ~ .BurgerNavBar__content__circle,
+  #home:checked ~ div div .BurgerNavBar__content__selected--indicator
+    left: -80%
+
+
+  #training:checked ~ [for="training"] > img.icon  
+    top: -9vh
+    height: 45px
+    width: 45px
+
+  #training:checked ~ .BurgerNavBar__content__circle,
+  #training:checked ~ div div .BurgerNavBar__content__selected--indicator
+    left: -40%
+
+  #calendar:checked ~ [for="calendar"] > img.icon 
+    top: -9vh
+    height: 45px
+    width: 45px
+
+  #calendar:checked ~ .BurgerNavBar__content__circle,
+  #calendar:checked ~ div div .BurgerNavBar__content__selected--indicator
+    left: 0
+
+  #shop:checked ~ [for="shop"] > img.icon 
+    top: -9vh
+    height: 45px
+    width: 45px
+
+  #shop:checked ~ .BurgerNavBar__content__circle,
+  #shop:checked ~ div div .BurgerNavBar__content__selected--indicator
+    left: 40%
+  
+  #team:checked ~ [for="team"] > img.icon 
+    top: -9vh
+    height: 45px
+    width: 45px
+
+  #team:checked ~ .BurgerNavBar__content__circle,
+  #team:checked ~ div div .BurgerNavBar__content__selected--indicator
+    left: 80%
+
+    
+  @media only screen and (min-width: $desktop)
+    display: none
