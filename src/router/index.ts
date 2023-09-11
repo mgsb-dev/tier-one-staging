@@ -9,7 +9,7 @@ import ShopView from '@/views/ShopView/ShopView.vue'
 import AboutView from '@/views/AboutView/AboutView.vue'
 
 const router = createRouter({
-  history: createWebHistory('/tier_one_staging/'),
+  history: createWebHistory('/tier-one-staging/'),
   routes: [
     {
       path: '/',
