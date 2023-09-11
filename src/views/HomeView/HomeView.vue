@@ -1,7 +1,7 @@
 <template>
   <main class="Home__wrapper">
     <section class="Home__section">
-      <video autoplay muted loop src="training.mp4"></video>
+      <video autoplay muted loop src="@/assets/home/training.mp4"></video>
       <h1 class="Home__title" data-text="Tierone">
         Tierone
         <span class="Home__title__glitch">Tierone</span>
