@@ -1,40 +1,36 @@
 <template>
   <header>
-    <nav class="BurgerNavBar" aria-expanded="false">
-      <div class="BurgerNavBar__content">
+    <div class="BurgerNavBar" aria-expanded="false" @click="handleClick">
+      <input id="toggle" type="checkbox" class="BurgerNavBar__toggle" :class="{ active: isOpen }" />
+
+      <label class="toggle__label" for="toggle">
+        <span class="button button-toggle"></span>
+      </label>
+
+      <!-- The Nav Menu -->
+      <nav class="nav">
+        <a class="nav-item" href="">Dashboard</a>
+        <a class="nav-item" href="">History</a>
+        <a class="nav-item" href="">Statistics</a>
+        <a class="nav-item" href="">Settings</a>
+      </nav>
+
+      <!-- Dummy Content -->
+      <section class="dummy-content">
+        <div class="circle"></div>
+        <div class="text"><span></span><span></span></div>
+        <div class="square-top"></div>
+        <div class="square-behind"></div>
+      </section>
+
+      <!-- <div class="BurgerNavBar__content">
         <input type="radio" name="navigation" id="home" checked="true" @click="goTo('home')" />
         <input type="radio" name="navigation" id="training" @click="goTo('training')" />
         <input type="radio" name="navigation" id="calendar" @click="goTo('calendar')" />
         <input type="radio" name="navigation" id="shop" @click="goTo('shop')" />
         <input type="radio" name="navigation" id="team" @click="goTo('about-us')" />
-        <label class="BurgerNavBar__label" for="home">
-          <img class="icon" :src="HomeIcon" alt="" />
-        </label>
-
-        <label class="BurgerNavBar__label" for="training">
-          <img class="icon" :src="TrainingIcon" alt="" />
-        </label>
-
-        <label class="BurgerNavBar__label" for="calendar">
-          <img class="icon" :src="CalendarIcon" alt="" />
-        </label>
-
-        <label class="BurgerNavBar__label" for="shop">
-          <img class="icon" :src="ShopIcon" alt="" />
-        </label>
-
-        <label class="BurgerNavBar__label" for="team">
-          <img class="icon" :src="TeamIcon" alt="" />
-        </label>
-
-        <div class="BurgerNavBar__content__circle"></div>
-        <div class="BurgerNavBar__content__selected">
-          <div class="BurgerNavBar__content__selected--bottom">
-            <span class="BurgerNavBar__content__selected--indicator"></span>
-          </div>
-        </div>
-      </div>
-    </nav>
+      </div> -->
+    </div>
   </header>
 </template>
 
@@ -50,7 +46,7 @@ import TeamIcon from '@/assets/menu/team.png'
 import CalendarIcon from '@/assets/menu/calendar.png'
 
 export default defineComponent({
-  setup() {
+  setup(_,{ emit }) {
     const trainings = [
       { name: 'Nacional', id: '/training/national' },
       { name: 'Internacional', id: '/training/international' }
@@ -60,6 +56,7 @@ export default defineComponent({
     const isProgramsShow = ref(false)
     const lastActiveTab = ref<string | null>(null)
     const isMobileScreen = ref(false)
+    const isOpen = ref(false)
 
     onMounted(() => {
       window.addEventListener('resize', checkScreenSize)
@@ -68,6 +65,13 @@ export default defineComponent({
     onBeforeMount(() => {
       window.removeEventListener('resize', checkScreenSize)
     })
+
+    const handleClick = (e: Event) => {
+      e.preventDefault()
+      isOpen.value = !isOpen.value
+      emit('toggleMenu', isOpen.value)
+      console.log('click', e)
+    }
 
     const goTo = (id: string) => {
       router.push({ name: id })
@@ -128,6 +132,7 @@ export default defineComponent({
       isTrainingsShow,
       isProgramsShow,
       isMobileScreen,
+      isOpen,
 
       showTraining,
       hideTraining,
@@ -135,12 +140,13 @@ export default defineComponent({
       hideTabs,
       openInstagram,
       openFacebook,
-      goTo
+      goTo,
+      handleClick
     }
   }
 })
 </script>
 
 <style lang="sass">
-@import './BurgerNavBar.sass'
+@import './BurgerNavBarCopy.sass'
 </style>

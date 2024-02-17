@@ -15,6 +15,10 @@
   &__container--columns
     display: flex
     flex-direction: column
+    &.active
+      margin-bottom: 100px
+      pointer-events: auto
+      transform: translate(50px, 50px)
     @media only screen and (min-width: $tablet)
       flex-direction: row
       justify-content: space-between

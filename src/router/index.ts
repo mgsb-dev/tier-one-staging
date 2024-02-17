@@ -32,11 +32,6 @@ const router = createRouter({
       component: NationalTrainingView
     },
     {
-      path: '/calendar',
-      name: 'calendar',
-      component: CalendarView
-    },
-    {
       path: '/gallery',
       name: 'gallery',
       component: GalleryView

@@ -1,5 +1,5 @@
 <template>
-  <div class="ViewPanel">
+  <div class="ViewPanel" :class="{ active: isOpen }">
     <div class="ViewPanel__spacer"></div>
     <div class="ViewPanel__container">
       <slot></slot>
@@ -11,6 +11,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  props: { isOpen: Boolean },
   setup() {}
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <main class="Home__wrapper">
-    <section class="Home__section">
+    <section class="Home__section" :class="{ 'active': isOpen }">
       <video autoplay muted loop playsinline src="@/assets/home/training.mp4"></video>
       <h1 class="Home__title" data-text="Tierone">
         Tierone
@@ -16,6 +16,7 @@ import { defineComponent, onMounted, ref } from 'vue'
 import checkIsDesktop from '@/helpers/ComponentHelper'
 
 export default defineComponent({
+  props: { isOpen: Boolean },
   setup() {
     const isDesktop = ref(false)
     const isChromeBrowser = ref(false)
