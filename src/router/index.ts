@@ -2,8 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import InternationalTrainingView from '@/views/InternationalTrainingView/InternationalTrainingView.vue'
 import NationalTrainingView from '@/views/NationalTrainingView/NationalTrainingView.vue'
 import GeneralTrainingView from '@/views/GeneralTrainingView/GeneralTrainingView.vue'
-import GalleryView from '@/views/GalleryView/GalleryView.vue'
-import ShopView from '@/views/ShopView/ShopView.vue'
+import SurvivalView from '@/views/SurvivalView/SurvivalView.vue'
+import ClientsView from '@/views/ClientsView/ClientsView.vue'
+
+
+// import GalleryView from '@/views/GalleryView/GalleryView.vue'
+// import ShopView from '@/views/ShopView/ShopView.vue'
 import AboutView from '@/views/AboutView/AboutView.vue'
 
 const router = createRouter({
@@ -29,15 +33,25 @@ const router = createRouter({
       name: 'national',
       component: NationalTrainingView
     },
+    // {
+    //   path: '/gallery',
+    //   name: 'gallery',
+    //   component: GalleryView
+    // },
+    // {
+    //   path: '/shop',
+    //   name: 'shop',
+    //   component: ShopView
+    // },
     {
-      path: '/gallery',
-      name: 'gallery',
-      component: GalleryView
+      path: '/survival',
+      name: 'survival',
+      component: SurvivalView
     },
     {
-      path: '/shop',
-      name: 'shop',
-      component: ShopView
+      path: '/clients',
+      name: 'clients',
+      component: ClientsView
     },
     {
       path: '/about-us',
