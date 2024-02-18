@@ -5,7 +5,7 @@
 .Home
   &__wrapper
     position: relative
-    height: 100vh
+    height: 100%
     width: 100vw
     overflow: hidden
   &__section
@@ -16,6 +16,10 @@
     display: flex
     justify-content: center
     align-items: center
+    &.active
+      margin-bottom: 100px
+      pointer-events: auto
+      transform: translate(50px, 50px)
   &__title
     position: relative
     font-size: 15vw
@@ -36,7 +40,7 @@
       &:last-child 
         clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%)
         animation: glitch steps(1) 1.5s infinite
-        
+  
   
 video
   position: absolute

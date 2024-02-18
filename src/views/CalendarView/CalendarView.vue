@@ -83,7 +83,6 @@ export default defineComponent({
 
     const clicked = (date: { id: Date }) => {
       showDate.value = date.id
-      console.log('e', date.id)
     }
 
     return { attributes, showDate, columns, clicked }

@@ -3,7 +3,7 @@
     <ViewPanel>
       <div class="About__wrapper">
         <img :src="Logo" class="About__image" />
-        <div class="About__container--columns">
+        <div class="About__container--columns" :class="{ 'active': isOpen }">
           <div class="About__content About__column">
             <h2 class="About__title">¿Quiénes somos?</h2>
             <p>
@@ -86,6 +86,7 @@ import Logo from '@/assets/full_logo.png'
 
 export default defineComponent({
   components: { ViewPanel, MailIcon, InstagramIcon },
+  props: { isOpen: Boolean },
   setup() {
     const openInstagram = () => {
       const openWindow = window.open()

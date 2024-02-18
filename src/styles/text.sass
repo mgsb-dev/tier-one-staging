@@ -1,4 +1,5 @@
 @import '@/styles/colors'
+@import '@/styles/breakpoints'
 
 
 h1
@@ -16,9 +17,16 @@ h1
 
 h2
   font-family: $font__title
-  font-size: 1.8rem
+  font-size: 1rem
   color: $color__white
   font-weight: bold
+  @media only screen and (min-width: $tablet)
+    font-size: 1.8rem
+
+p, p>span
+  font-size: 0.8rem
+  @media only screen and (min-width: $tablet)
+    font-size: 1rem
 
 .text__align--center
   text-align: center

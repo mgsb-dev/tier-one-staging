@@ -1,48 +1,33 @@
 <template>
   <header>
-    <nav class="BurgerNavBar" aria-expanded="false">
-      <div class="BurgerNavBar__content">
-        <input type="radio" name="navigation" id="home" checked="true" @click="goTo('home')" />
-        <input type="radio" name="navigation" id="training" @click="goTo('training')" />
-        <input type="radio" name="navigation" id="calendar" @click="goTo('calendar')" />
-        <input type="radio" name="navigation" id="shop" @click="goTo('shop')" />
-        <input type="radio" name="navigation" id="team" @click="goTo('about-us')" />
-        <label class="BurgerNavBar__label" for="home">
-          <img class="icon" :src="HomeIcon" alt="" />
-        </label>
+    <div class="BurgerNavBar" aria-expanded="false" @click="handleClick">
+      <input id="toggle" type="checkbox" class="BurgerNavBar__toggle" :class="{ active: isOpen }" />
 
-        <label class="BurgerNavBar__label" for="training">
-          <img class="icon" :src="TrainingIcon" alt="" />
-        </label>
+      <label class="toggle__label" for="toggle">
+        <span class="button button-toggle"></span>
+      </label>
 
-        <label class="BurgerNavBar__label" for="calendar">
-          <img class="icon" :src="CalendarIcon" alt="" />
-        </label>
+      <!-- The Nav Menu -->
+      <nav class="nav">
+        <RouterLink to="/training" class="nav-item">Formación</RouterLink>
+          
+        <RouterLink to="/survival" class="nav-item">Supervivencia</RouterLink>
+          
+        <!-- <RouterLink to="/shop" class="nav-item">Tienda</RouterLink> -->
+          
+        <RouterLink to="/clients" class="nav-item">Soy socio</RouterLink>
+          
+        <RouterLink to="/about-us" class="nav-item">Nosotros</RouterLink>
 
-        <label class="BurgerNavBar__label" for="shop">
-          <img class="icon" :src="ShopIcon" alt="" />
-        </label>
-
-        <label class="BurgerNavBar__label" for="team">
-          <img class="icon" :src="TeamIcon" alt="" />
-        </label>
-
-        <div class="BurgerNavBar__content__circle"></div>
-        <div class="BurgerNavBar__content__selected">
-          <div class="BurgerNavBar__content__selected--bottom">
-            <span class="BurgerNavBar__content__selected--indicator"></span>
-          </div>
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onBeforeMount, onMounted } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import router from '@/router/index.js'
-// import { InstagramIcon, FacebookIcon } from '@zhuowenli/vue-feather-icons'
-import checkScreenIsNotDesktop from '@/helpers/ComponentHelper'
 import HomeIcon from '@/assets/menu/home.png'
 import TrainingIcon from '@/assets/menu/training.png'
 import ShopIcon from '@/assets/menu/shop.png'
@@ -50,7 +35,8 @@ import TeamIcon from '@/assets/menu/team.png'
 import CalendarIcon from '@/assets/menu/calendar.png'
 
 export default defineComponent({
-  setup() {
+  components: { RouterLink },
+  setup(_,{ emit }) {
     const trainings = [
       { name: 'Nacional', id: '/training/national' },
       { name: 'Internacional', id: '/training/international' }
@@ -60,21 +46,16 @@ export default defineComponent({
     const isProgramsShow = ref(false)
     const lastActiveTab = ref<string | null>(null)
     const isMobileScreen = ref(false)
+    const isOpen = ref(false)
 
-    onMounted(() => {
-      window.addEventListener('resize', checkScreenSize)
-    })
-
-    onBeforeMount(() => {
-      window.removeEventListener('resize', checkScreenSize)
-    })
+    const handleClick = (e: Event) => {
+      e.preventDefault()
+      isOpen.value = !isOpen.value
+      emit('toggleMenu', isOpen.value)
+    }
 
     const goTo = (id: string) => {
       router.push({ name: id })
-    }
-
-    const checkScreenSize = () => {
-      isMobileScreen.value = checkScreenIsNotDesktop()
     }
 
     const showTraining = (): void => {
@@ -128,6 +109,7 @@ export default defineComponent({
       isTrainingsShow,
       isProgramsShow,
       isMobileScreen,
+      isOpen,
 
       showTraining,
       hideTraining,
@@ -135,12 +117,13 @@ export default defineComponent({
       hideTabs,
       openInstagram,
       openFacebook,
-      goTo
+      goTo,
+      handleClick
     }
   }
 })
 </script>
 
 <style lang="sass">
-@import './BurgerNavBar.sass'
+@import './BurgerNavBarCopy.sass'
 </style>
