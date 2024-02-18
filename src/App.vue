@@ -88,7 +88,6 @@ export default defineComponent({
           rrssElement?.classList.remove('show')
           header.classList.remove('left')
           heroElement.style.display="grid"
-          header.style.justifyContent="center"
           content?.classList.remove('show')
         } else {
           if (!isChrome.value) {
@@ -112,7 +111,6 @@ export default defineComponent({
             }
             content?.classList.add('show')
             header.style.justifyContent="space-between"
-
           }, 300)
         }
       }
@@ -258,7 +256,7 @@ $transition-delay: 0.05s
     width: 100%
     display: flex
     flex-direction: row
-    justify-content: center
+    justify-content: flex-start
     transition: 300ms ease-in
     &.left
       justify-content: space-between
