@@ -1,5 +1,5 @@
 <template>
-  <div class="app" @scroll="checkLogoPosition">
+  <div class="app" @scroll="showHome">
     <div id="hero" class="Hero">
       <p class="Hero__text">"Cuando ser los mejores, no es suficiente"</p>
     </div>
@@ -66,7 +66,7 @@ export default defineComponent({
       checkIsChrome()
     })
 
-    const checkLogoPosition = () => {
+    const showHome = (e) => {
       const heroElement = document.getElementById('hero')
       const refElement = document.getElementById('reference')
       const rrssElement = document.getElementById('rrss')
@@ -74,47 +74,89 @@ export default defineComponent({
       const header = document.getElementById('header')
       const content = document.getElementById('tieroneContent')
       const headerWrapper = document.getElementById('headerWrapper')
-
+      
       if (headerWrapper && heroElement && titleElement && refElement && header) {
         const { top } = refElement.getBoundingClientRect()
-        const TOP_SPACING = 50;
+        const TOP_SPACING = window.innerHeight / 2
 
-        if (top > TOP_SPACING) {
-          if (!isChrome.value) {
-            titleElement.classList.remove('title')
-            titleElement.classList.add('title-big')
-          }
-          
+        if (top < TOP_SPACING) {
+          headerWrapper.classList.add('fadeOut')
+          heroElement.classList.add('fadeOut')
+          setTimeout(() => {
+            content?.classList.add('show')
+            heroElement.style.display="none"
+            header.style.justifyContent="space-between"
+            headerWrapper.classList.remove('fadeOut')
+            
+            if (isDesktopScreen.value) {
+              titleElement.style.width="20%"
+              headerWrapper.classList.add('fadeIn')
+              rrssElement?.classList.add('show')
+            } else {
+              headerWrapper.style.display="none"
+            }
+          }, 500)
+        } else {
           rrssElement?.classList.remove('show')
           header.classList.remove('left')
           heroElement.style.display="grid"
           content?.classList.remove('show')
-        } else {
-          if (!isChrome.value) {
-            titleElement.classList.remove('title-big')
-            titleElement.classList.add('title')
-          }
-          heroElement.style.display="none"
-
-          setTimeout(() => {
-            if (isDesktopScreen.value) {
-              rrssElement?.classList.add('show')
-              header?.classList.add('left')
-            } else {
-              headerWrapper.style.display="none"
-            }
-          }, 150);
-
-          setTimeout(() => {
-            if (isDesktopScreen.value) {
-              rrssElement?.classList.add('show')
-            }
-            content?.classList.add('show')
-            header.style.justifyContent="space-between"
-          }, 300)
         }
       }
     }
+
+    // const checkLogoPosition = () => {
+    //   const heroElement = document.getElementById('hero')
+    //   const refElement = document.getElementById('reference')
+    //   const rrssElement = document.getElementById('rrss')
+    //   const titleElement = document.getElementById('tieroneTitle')
+    //   const header = document.getElementById('header')
+    //   const content = document.getElementById('tieroneContent')
+    //   const headerWrapper = document.getElementById('headerWrapper')
+
+    //   if (headerWrapper && heroElement && titleElement && refElement && header) {
+    //     const { top } = refElement.getBoundingClientRect()
+    //     const TOP_SPACING = 50;
+
+    //     if (top > TOP_SPACING) {
+    //       if (!isChrome.value) {
+    //         titleElement.classList.remove('title')
+    //         titleElement.classList.add('title-big')
+    //       }
+
+    //       rrssElement?.classList.remove('show')
+    //       header.classList.remove('left')
+    //       heroElement.style.display="grid"
+    //       content?.classList.remove('show')
+    //       headerWrapper.classList.remove('fadeOut')
+    //       heroElement.classList.remove('fadeOut')
+    //       headerWrapper.classList.add('fadeIn')
+    //       heroElement.classList.add('fadeIn')
+    //     } else {
+    //       headerWrapper.classList.add('fadeOut')
+    //       heroElement.classList.add('fadeOut')
+
+    //       setTimeout(() => {
+    //         if (isDesktopScreen.value) {
+    //           rrssElement?.classList.add('show')
+    //           header?.classList.add('left')
+    //         } else {
+    //           headerWrapper.style.display="none"
+    //           heroElement.style.display="none"
+    //         }
+    //       }, 150);
+
+    //       setTimeout(() => {
+    //         if (isDesktopScreen.value) {
+    //           rrssElement?.classList.add('show')
+    //         }
+    //         content?.classList.add('show')
+    //         header.style.justifyContent="space-between"
+            
+    //       }, 300)
+    //     }
+    //   }
+    // }
 
     const checkIsChrome = () => {
       isChrome.value = navigator.userAgent.indexOf('Chrome') !== -1
@@ -179,7 +221,7 @@ export default defineComponent({
       clickHandler,
       openInstagram,
       openFacebook,
-      checkLogoPosition
+      showHome
     }
   }
 })
@@ -256,27 +298,27 @@ $transition-delay: 0.05s
     width: 100%
     display: flex
     flex-direction: row
-    justify-content: flex-start
+    justify-content: center
     transition: 300ms ease-in
     &.left
       justify-content: space-between
-  &::after
-    @media only screen and (min-width: $tablet)
-      justify-content: flex-end
-      animation: appear linear both
-      animation-timeline: view()
-      animation-range-start: 60vh
-      animation-range-end: 100vh
-      content: ''
-      position: absolute
-      opacity: 0
-      height: .05em
-      width: 100%
-      bottom: 0
-      background: linear-gradient(66deg, white 0%, rgba(110,110,110,1) 47%, rgba(4,5,25,1) 100%)
+  // &::after
+  //   @media only screen and (min-width: $tablet)
+  //     justify-content: flex-end
+  //     animation: appear linear both
+  //     // animation-timeline: view()
+  //     animation-range-start: 60vh
+  //     animation-range-end: 100vh
+  //     content: ''
+  //     position: absolute
+  //     opacity: 0
+  //     height: .05em
+  //     width: 100%
+  //     bottom: 0
+  //     background: linear-gradient(66deg, white 0%, rgba(110,110,110,1) 47%, rgba(4,5,25,1) 100%)
   &__logo
-    animation: zoom-out linear both
-    animation-timeline: view()
+    // animation: zoom-out linear both
+    // animation-timeline: view()
     animation-range-start: 10vh
     animation-range-end: 100vh
     background: linear-gradient(45deg, hsl(0, 100%, 70%), hsl(30, 100%, 70%), hsl(60, 100%, 70%), hsl(90, 100%, 70%), hsl(120, 100%, 70%), hsl(150, 100%, 70%), hsl(180, 100%, 70%), hsl(210, 100%, 70%), hsl(240, 100%, 70%), hsl(270, 100%, 70%), hsl(300, 100%, 70%), hsl(330, 100%, 70%), hsl(360, 100%, 70%))
@@ -338,23 +380,37 @@ span#reference
   height: 10px
   background: transparent
 
-@supports(animation-timeline: view())
-  @keyframes fade-out
-    to
-      background-size: 150%
-      opacity: 0
+.fadeOut
+  opacity: 1
+  animation: fadeOut .5s ease-out 1 forwards
+.fadeIn
+  opacity: 0
+  animation: fadeIn .5s ease-in 1 forwards
 
-  @keyframes zoom-out
-    to
-      width: 20%
-      padding-left: .1em
+// @supports(animation-timeline: view())
+//   @keyframes fade-out
+//     to
+//       background-size: 150%
+//       opacity: 0
 
-  @keyframes appear
-    to
-      opacity: 1
+//   @keyframes zoom-out
+//     to
+//       width: 20%
+//       padding-left: .1em
 
-  @keyframes max-out
-    to
-      max-width: 100%
+//   @keyframes appear
+//     to
+//       opacity: 1
 
+//   @keyframes max-out
+//     to
+//       max-width: 100%
+
+@keyframes fadeOut
+  to
+    opacity: 0
+
+@keyframes fadeIn
+  to
+    opacity: 1
 </style>
