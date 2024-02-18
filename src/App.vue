@@ -1,108 +1,118 @@
 <template>
   <div class="app" @scroll="checkLogoPosition">
-    <div class="Hero">
+    <div id="hero" class="Hero">
       <p class="Hero__text">"Cuando ser los mejores, no es suficiente"</p>
     </div>
-    <header id="header" class="Header">
-      <img id="tieroneLogo" class="Header__logo-icon" :src="Logo" alt="Tier one logo" />
-      <div id="home" class="Header__logo" @click.prevent="clickHandler">
-        <RouterLink to="/" class="Header__logo__link">
-          <!-- <img :src="Logo" class="Header__logo__link__image" /> -->
-          <!-- <div class="Header__logo__link__image"> -->
-            <h1 id="tieroneTitle">TIER ONE CLUB</h1>
-          <!-- </div> -->
-        </RouterLink>
+    <header  class="Header">
+      <span id="reference"></span>
+      <div id="header" class="Header__content">
+        <div class="Header__logo" @click.prevent="clickHandler">
+          <RouterLink to="/" class="Header__logo__link">
+            <img id="tieroneTitle" :src="Title" alt="tier one club" class="Header__logo__title" />
+          </RouterLink>
+        </div>
+        <ul id="rrss" class="Header__rrss__container" >
+          <li class="Header__rrss__item">
+            <InstagramIcon
+              :height="isDesktopScreen ? `25px` : `15px`"
+              :width="isDesktopScreen ? `25px` : `15px`"
+              color="white"
+              stroke-width="2px"
+              @click="openInstagram"
+            />
+          </li>
+          <li class="Header__rrss__item">
+            <FacebookIcon
+              :height="isDesktopScreen ? `25px` : `15px`"
+              :width="isDesktopScreen ? `25px` : `15px`"
+              color="white"
+              stroke-width="2px"
+              @click="openFacebook"
+            />
+          </li>
+        </ul>
       </div>
-      <ul class="Header__rrss__container">
-        <li class="Header__rrss__item">
-          <InstagramIcon
-            :height="isMobileScreen ? `15px` : `20px`"
-            :width="isMobileScreen ? `15px` : `20px`"
-            color="white"
-            stroke-width="2px"
-            @click="openInstagram"
-          />
-        </li>
-        <li class="Header__rrss__item">
-          <FacebookIcon
-            :height="isMobileScreen ? `15px` : `20px`"
-            :width="isMobileScreen ? `15px` : `20px`"
-            color="white"
-            stroke-width="2px"
-            @click="openFacebook"
-          />
-        </li>
-      </ul>
     </header>
 
-    <div class="app__body" >
+    <div class="app__body">
       <div class="app__body-content" id="tieroneContent">
         <NavBarCopy />
+        <!-- <BurgerNavBar else @toggle-menu="toggleMenu" /> -->
+        <RouterView />
       </div>
-      
-      <!-- <BurgerNavBar else @toggle-menu="toggleMenu" /> -->
-      <!-- <RouterView /> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import checkIsDesktop from '@/helpers/ComponentHelper'
 import NavBarCopy from './components/molecules/NavBar/NavBarCopy.vue'
 import Logo from '@/assets/logo_white.png'
+import Title from '@/assets/tierone-long.png'
 import { InstagramIcon, FacebookIcon } from '@zhuowenli/vue-feather-icons'
 
 export default defineComponent({
   components: { NavBarCopy, InstagramIcon, FacebookIcon },
   setup() {
-    const isMobileScreen = ref(false)
+    const isDesktopScreen = ref(false)
     const isOpen = ref(false)
     const isChrome = ref(false)
 
     onMounted(() => {
-      window.addEventListener('load', checkScreenSize);
-      checkIsChrome();
+      window.addEventListener('load', checkScreenSize)
+      checkIsChrome()
     })
 
-    const checkIsChrome = () => {
-      isChrome.value = navigator.userAgent.indexOf("Chrome") !== -1;
-    }
-
     const checkLogoPosition = () => {
-      const titleElement = document.getElementById('tieroneTitle');
-      const logoElement = document.getElementById('tieroneLogo');
-      const header = document.getElementById('header');
-      const content = document.getElementById('tieroneContent');
+      const heroElement = document.getElementById('hero')
+      const refElement = document.getElementById('reference')
+      const rrssElement = document.getElementById('rrss')
+      const titleElement = document.getElementById('tieroneTitle')
+      const header = document.getElementById('header')
+      const content = document.getElementById('tieroneContent')
 
-      if (titleElement && logoElement && header) {
-        const { top } = titleElement.getBoundingClientRect();
+      if (heroElement && titleElement && refElement && header) {
+        const { top } = refElement.getBoundingClientRect()
+        const TOP_SPACING = 50;
 
-        if (top > 0) {
+        if (top > TOP_SPACING) {
           if (!isChrome.value) {
             titleElement?.classList.remove('title')
             titleElement?.classList.add('title-big')
           }
-          logoElement.classList.remove('show')
+          heroElement.style.display="grid"
           header?.classList.remove('left')
           content?.classList.remove('show')
-          
+          rrssElement?.classList.remove('show')
         } else {
           if (!isChrome.value) {
             titleElement?.classList.remove('title-big')
             titleElement?.classList.add('title')
           }
-          logoElement.classList.add('show')
-          header?.classList.add('left')
-          content?.classList.add('show')
+          heroElement.style.display="none"
+
+          setTimeout(() => {
+            rrssElement?.classList.add('show')
+            header?.classList.add('left')
+          }, 150);
+
+          setTimeout(() => {
+            content?.classList.add('show')
+            rrssElement?.classList.add('show')
+          }, 300)
         }
       }
     }
 
-    const checkScreenSize = () => {
-      isMobileScreen.value = checkIsDesktop()
+    const checkIsChrome = () => {
+      isChrome.value = navigator.userAgent.indexOf('Chrome') !== -1
     }
-    
+
+    const checkScreenSize = () => {
+      isDesktopScreen.value = checkIsDesktop()
+    }
+
     const toggleMenu = (menuIsOpen: boolean) => {
       isOpen.value = menuIsOpen
       console.log('--toggle', menuIsOpen)
@@ -137,8 +147,9 @@ export default defineComponent({
 
     return {
       Logo,
+      Title,
       isOpen,
-      isMobileScreen,
+      isDesktopScreen,
       toggleMenu,
       clickHandler,
       openInstagram,
@@ -160,7 +171,7 @@ export default defineComponent({
   width: 100vw
   height: 100vh
   &__body
-    height: calc(100% - 2rem)
+    height: calc(100% - 50px)
     &-content
       display: none
       &.show
@@ -168,6 +179,8 @@ export default defineComponent({
         width: 100%
         display: flex
         flex-direction: row
+        justify-content: flex-start
+        align-items: center
 .fade-enter-to, .fade-leave
   opacity: 1
 .fade-enter-active, .fade-leave-active
@@ -182,8 +195,8 @@ export default defineComponent({
 
 .Header
   display: flex
-  flex-direction: row
-  justify-content: center
+  flex-direction: column
+  justify-content: space-between
   align-items: center
   width: 100%
   animation: max-out linear both
@@ -193,10 +206,16 @@ export default defineComponent({
   position: sticky
   top: 0
   left: 0
-  height: 2.5rem
+  height: 4rem
   padding: 0
-  &.left
-    justify-content: flex-start
+  &__content
+    width: 100%
+    display: flex
+    flex-direction: row
+    justify-content: center
+    transition: 300 ease-in
+    &.left
+      justify-content: space-between
   &::after
     justify-content: flex-end
     animation: appear linear both
@@ -209,17 +228,12 @@ export default defineComponent({
     height: .05em
     width: 100%
     bottom: 0
-    background: -moz-linear-gradient(66deg, white 0%, rgba(110,110,110,1) 47%, rgba(4,5,25,1) 100%)
     background: linear-gradient(66deg, white 0%, rgba(110,110,110,1) 47%, rgba(4,5,25,1) 100%)
   &__logo
     animation: zoom-out linear both
     animation-timeline: view()
     animation-range-start: 10vh
     animation-range-end: 100vh
-    font-weight: 900
-    font-size: 12cqi
-    background: -moz-linear-gradient(45deg, hsl(0, 100%, 70%), hsl(30, 100%, 70%), hsl(60, 100%, 70%), hsl(90, 100%, 70%), hsl(120, 100%, 70%), hsl(150, 100%, 70%), hsl(180, 100%, 70%), hsl(210, 100%, 70%), hsl(240, 100%, 70%), hsl(270, 100%, 70%), hsl(300, 100%, 70%), hsl(330, 100%, 70%), hsl(360, 100%, 70%))
-    background: -moz-linear-gradient(in hsl longer hue 40deg, #f66 0 0)
     background: linear-gradient(45deg, hsl(0, 100%, 70%), hsl(30, 100%, 70%), hsl(60, 100%, 70%), hsl(90, 100%, 70%), hsl(120, 100%, 70%), hsl(150, 100%, 70%), hsl(180, 100%, 70%), hsl(210, 100%, 70%), hsl(240, 100%, 70%), hsl(270, 100%, 70%), hsl(300, 100%, 70%), hsl(330, 100%, 70%), hsl(360, 100%, 70%))
     background: linear-gradient(in hsl longer hue 40deg, #f66 0 0)
     background-clip: text
@@ -228,17 +242,21 @@ export default defineComponent({
       display: none
       width: 100px
       height: auto
-      transition: 100 ease-in
+      transition: 300 ease-in
       &.show
         display: block
+    &__title
+      object-fit: contain
+      width: 100%
   &__rrss
     &__container
       display: none
-      padding-right: 1em
-      margin: 0
-      gap: 1rem
-      &::after
-        display: inline-flex
+      &.show
+        padding-right: 1em
+        display: flex
+        align-items: center
+        margin: 0
+        gap: 1rem        
     &__item
       list-style: none
       display: inline-block
@@ -259,34 +277,28 @@ export default defineComponent({
     color: white
     text-align: center
 
-@supports(animation-timeline: view())
-  @-moz-keyframes fade-out
-    to
-      background-size: 150%
-      opacity: 0
+// more
+.title
+  width: 20%
+  transition: 200ms linear
+  &-big
+    width: inherit
+    transition: 300ms linear
+span#reference
+  width: 10px
+  height: 10px
+  background: transparent
 
+@supports(animation-timeline: view())
   @keyframes fade-out
     to
       background-size: 150%
       opacity: 0
 
-  @-moz-keyframes zoom-out
-    to
-      font-size: 2rem
-      padding-left: .1em
-
   @keyframes zoom-out
     to
-      font-size: 2rem
+      width: 20%
       padding-left: .1em
-
-  @-moz-keyframes appear
-    to
-      opacity: 1
-
-  @-moz-keyframes max-out
-    to
-      max-width: 100%
 
   @keyframes appear
     to
@@ -295,10 +307,5 @@ export default defineComponent({
   @keyframes max-out
     to
       max-width: 100%
-.title
-  font-size: 2rem
-  transition: 200ms linear
-  &-big
-    font-size: inherit
-    transition: 300ms linear
+
 </style>

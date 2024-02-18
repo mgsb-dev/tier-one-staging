@@ -4,6 +4,7 @@
       <li
         id="training"
         class="NavBar__list-title"
+        :class="{active: lastActiveTab === Sections.training}"
         @click.prevent="clickHandler"
       >
         <RouterLink to="/training" class="NavBar__list-title--dark">Formación</RouterLink>
@@ -48,7 +49,7 @@ export default defineComponent({
 
     const isTrainingsShow = ref(false)
     const isProgramsShow = ref(false)
-    const lastActiveTab = ref<string | null>(null)
+    const lastActiveTab = ref<string | null>(Sections.training)
 
     const showTraining = (): void => {
       isProgramsShow.value = false
@@ -87,6 +88,8 @@ export default defineComponent({
       trainings,
       isTrainingsShow,
       isProgramsShow,
+      lastActiveTab,
+      Sections,
 
       showTraining,
       hideTraining,
