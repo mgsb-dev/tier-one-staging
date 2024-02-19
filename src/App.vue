@@ -66,7 +66,7 @@ export default defineComponent({
       checkIsChrome()
     })
 
-    const showHome = (e) => {
+    const showHome = () => {
       const heroElement = document.getElementById('hero')
       const refElement = document.getElementById('reference')
       const rrssElement = document.getElementById('rrss')
