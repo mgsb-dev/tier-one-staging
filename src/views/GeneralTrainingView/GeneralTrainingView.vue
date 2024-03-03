@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 import router from '@/router/index.js'
 
 export default defineComponent({
@@ -53,7 +53,9 @@ export default defineComponent({
     const goTo = (id: string) => {
       router.push({ name: id })
     }
-    return { goTo }
+    return {
+      goTo
+    }
   }
 })
 </script>

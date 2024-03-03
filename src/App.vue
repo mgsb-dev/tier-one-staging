@@ -38,7 +38,13 @@
       <div class="app__body-content" id="tieroneContent">
         <NavBarCopy v-if="isDesktopScreen" />
         <BurgerNavBar v-else @toggle-menu="toggleMenu" />
-        <RouterView />
+
+        <div v-if="!isDesktopScreen" class="app__body-content__box">
+          <span v-if="isLoading" class="loader"></span>
+          <RouterView v-else/>
+        </div>
+
+        <RouterView v-else/>
       </div>
     </div>
   </div>
@@ -59,11 +65,12 @@ export default defineComponent({
     const isDesktopScreen = ref(false)
     const isOpen = ref(false)
     const isChrome = ref(false)
+    const isLoading = ref(true);
 
     onMounted(() => {
       window.addEventListener('load', checkScreenSize)
 
-      checkIsChrome()
+      checkIsChrome();
     })
 
     const showHome = () => {
@@ -94,8 +101,12 @@ export default defineComponent({
               rrssElement?.classList.add('show')
             } else {
               headerWrapper.style.display="none"
+              setTimeout(() => {
+                isLoading.value = false;
+              }, 1500);
             }
           }, 500)
+
         } else {
           rrssElement?.classList.remove('show')
           header.classList.remove('left')
@@ -104,59 +115,6 @@ export default defineComponent({
         }
       }
     }
-
-    // const checkLogoPosition = () => {
-    //   const heroElement = document.getElementById('hero')
-    //   const refElement = document.getElementById('reference')
-    //   const rrssElement = document.getElementById('rrss')
-    //   const titleElement = document.getElementById('tieroneTitle')
-    //   const header = document.getElementById('header')
-    //   const content = document.getElementById('tieroneContent')
-    //   const headerWrapper = document.getElementById('headerWrapper')
-
-    //   if (headerWrapper && heroElement && titleElement && refElement && header) {
-    //     const { top } = refElement.getBoundingClientRect()
-    //     const TOP_SPACING = 50;
-
-    //     if (top > TOP_SPACING) {
-    //       if (!isChrome.value) {
-    //         titleElement.classList.remove('title')
-    //         titleElement.classList.add('title-big')
-    //       }
-
-    //       rrssElement?.classList.remove('show')
-    //       header.classList.remove('left')
-    //       heroElement.style.display="grid"
-    //       content?.classList.remove('show')
-    //       headerWrapper.classList.remove('fadeOut')
-    //       heroElement.classList.remove('fadeOut')
-    //       headerWrapper.classList.add('fadeIn')
-    //       heroElement.classList.add('fadeIn')
-    //     } else {
-    //       headerWrapper.classList.add('fadeOut')
-    //       heroElement.classList.add('fadeOut')
-
-    //       setTimeout(() => {
-    //         if (isDesktopScreen.value) {
-    //           rrssElement?.classList.add('show')
-    //           header?.classList.add('left')
-    //         } else {
-    //           headerWrapper.style.display="none"
-    //           heroElement.style.display="none"
-    //         }
-    //       }, 150);
-
-    //       setTimeout(() => {
-    //         if (isDesktopScreen.value) {
-    //           rrssElement?.classList.add('show')
-    //         }
-    //         content?.classList.add('show')
-    //         header.style.justifyContent="space-between"
-            
-    //       }, 300)
-    //     }
-    //   }
-    // }
 
     const checkIsChrome = () => {
       isChrome.value = navigator.userAgent.indexOf('Chrome') !== -1
@@ -185,30 +143,16 @@ export default defineComponent({
     }
 
     const openInstagram = () => {
-      window.location.href = 'https://www.instagram.com/tier.one.club/'
+      window.location.href = 'https://www.instagram.com/tier.one.club/';
     }
 
     const openFacebook = () => {
-      window.location.href = ''
+      window.location.href = '';
     }
 
     const clickHandler = (e: Event): void => {
       const eventTarget = e.currentTarget as HTMLSelectElement
       const id = eventTarget.getAttribute('id')
-      // hideTabs()
-
-      // if (!lastActiveTab.value) {
-      //   lastActiveTab.value = id
-      //   eventTarget.classList.add('active')
-      //   return
-      // }
-
-      // const previousElement = document.getElementById(lastActiveTab.value)
-      // if (previousElement) {
-      //   lastActiveTab.value = id
-      //   previousElement.classList.remove('active')
-      //   eventTarget.classList.add('active')
-      // }
     }
 
     return {
@@ -216,12 +160,13 @@ export default defineComponent({
       Title,
       isOpen,
       isDesktopScreen,
+      isLoading,
 
       toggleMenu,
-      clickHandler,
       openInstagram,
       openFacebook,
-      showHome
+      showHome,
+      clickHandler
     }
   }
 })
@@ -255,6 +200,14 @@ $transition-delay: 0.05s
       height: calc(100% - 50px)
     &-content
       display: none
+      &__box
+        width: 100%
+        height: 100%
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        align-items: center
+        gap: 2%
       &.show
         height: 100%
         width: 100%
@@ -267,6 +220,7 @@ $transition-delay: 0.05s
           justify-content: flex-start
           align-items: center
           gap: 2%
+          
 .fade-enter-to, .fade-leave
   opacity: 1
 .fade-enter-active, .fade-leave-active
@@ -302,29 +256,13 @@ $transition-delay: 0.05s
     transition: 300ms ease-in
     &.left
       justify-content: space-between
-  // &::after
-  //   @media only screen and (min-width: $tablet)
-  //     justify-content: flex-end
-  //     animation: appear linear both
-  //     // animation-timeline: view()
-  //     animation-range-start: 60vh
-  //     animation-range-end: 100vh
-  //     content: ''
-  //     position: absolute
-  //     opacity: 0
-  //     height: .05em
-  //     width: 100%
-  //     bottom: 0
-  //     background: linear-gradient(66deg, white 0%, rgba(110,110,110,1) 47%, rgba(4,5,25,1) 100%)
   &__logo
-    // animation: zoom-out linear both
-    // animation-timeline: view()
     animation-range-start: 10vh
     animation-range-end: 100vh
     background: linear-gradient(45deg, hsl(0, 100%, 70%), hsl(30, 100%, 70%), hsl(60, 100%, 70%), hsl(90, 100%, 70%), hsl(120, 100%, 70%), hsl(150, 100%, 70%), hsl(180, 100%, 70%), hsl(210, 100%, 70%), hsl(240, 100%, 70%), hsl(270, 100%, 70%), hsl(300, 100%, 70%), hsl(330, 100%, 70%), hsl(360, 100%, 70%))
     background: linear-gradient(in hsl longer hue 40deg, #f66 0 0)
     background-clip: text
-    color: #0000
+    color: $color__black
     &-icon
       display: none
       width: 100px
@@ -364,6 +302,35 @@ $transition-delay: 0.05s
     font-weight: 100
     color: white
     text-align: center
+.loader
+  left: calc(50% - 20px)
+  top: 20%
+  width: 48px
+  height: 48px
+  border-radius: 50%
+  display: inline-block
+  position: relative
+  background: linear-gradient(0deg, rgba(40, 133, 40, 0.2) 33%, $color__hud 100%)
+  box-sizing: border-box
+  animation: rotation 1s linear infinite
+  &::after
+    content: ''  
+    box-sizing: border-box
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    width: 44px
+    height: 44px
+    border-radius: 50%
+    background: $color__black
+
+@keyframes rotation 
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
 
 // more
 .title
@@ -387,24 +354,6 @@ span#reference
   opacity: 0
   animation: fadeIn .5s ease-in 1 forwards
 
-// @supports(animation-timeline: view())
-//   @keyframes fade-out
-//     to
-//       background-size: 150%
-//       opacity: 0
-
-//   @keyframes zoom-out
-//     to
-//       width: 20%
-//       padding-left: .1em
-
-//   @keyframes appear
-//     to
-//       opacity: 1
-
-//   @keyframes max-out
-//     to
-//       max-width: 100%
 
 @keyframes fadeOut
   to
